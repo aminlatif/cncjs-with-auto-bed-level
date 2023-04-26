@@ -2,6 +2,7 @@
 This is a fork of [cncjs/cncjs](https://github.com/cncjs/cncjs) plus the code of [kreso-t/cncjs-kt-ext](https://github.com/kreso-t/cncjs-kt-ext) embeded into it with an extra widget.
 ![cncjs](https://github.com/aminlatif/cncjs-with-auto-bed-level/raw/master/images/cncjsabl01.png)
 ![cncjs](https://github.com/aminlatif/cncjs-with-auto-bed-level/raw/master/images/cncjsabl02.png)
+![cncjs](https://github.com/aminlatif/cncjs-with-auto-bed-level/raw/master/images/cncjsabl03.png)
 
 # CNCjs [![Backers on Open Collective](https://opencollective.com/cncjs/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/cncjs/sponsors/badge.svg)](#sponsors) [![Travis CI Build Status](https://travis-ci.org/cncjs/cncjs.svg)](https://travis-ci.org/cncjs/cncjs) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/qxx53wq32w3edule?svg=true)](https://ci.appveyor.com/project/cheton/cncjs) [![Coverage Status](https://coveralls.io/repos/github/cncjs/cncjs/badge.svg?branch=master)](https://coveralls.io/github/cncjs/cncjs?branch=master)
 
