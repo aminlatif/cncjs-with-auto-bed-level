@@ -1,5 +1,5 @@
 # CNCjs with Auto Bed Level
-This is a fork of [cncjs/cncjs](https://github.com/cncjs/cncjs) plus the code of [kreso-t/cncjs-kt-ext](https://github.com/kreso-t/cncjs-kt-ext) embeded into it with an extra widget.
+This is a fork of [cncjs/cncjs](https://github.com/cncjs/cncjs) plus the code of [kreso-t/cncjs-kt-ext](https://github.com/kreso-t/cncjs-kt-ext) embeded into it with an extra widget. currently only working on GRBL.
 ![cncjs](https://github.com/aminlatif/cncjs-with-auto-bed-level/raw/master/images/cncjsabl01.png)
 ![cncjs](https://github.com/aminlatif/cncjs-with-auto-bed-level/raw/master/images/cncjsabl02.png)
 ![cncjs](https://github.com/aminlatif/cncjs-with-auto-bed-level/raw/master/images/cncjsabl03.png)
