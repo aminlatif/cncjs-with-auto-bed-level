@@ -2,7 +2,7 @@ import endsWith from 'lodash/endsWith';
 import mapKeys from 'lodash/mapKeys';
 import sha1 from 'sha1';
 import log from 'app/lib/log';
-import pkg from '../../package.json';
+import pkg from '../../../package.json';
 
 const webroot = '/';
 

@@ -22,7 +22,7 @@ const defaultState = {
       secondary: {
         show: true,
         widgets: [
-          'axes', 'gcode', 'macro', 'probe', 'spindle', 'laser'
+          'axes', 'gcode', 'probe', 'bedlevel', 'macro', 'spindle', 'laser'
         ]
       }
     },
@@ -146,6 +146,15 @@ const defaultState = {
       }
     },
     probe: {
+      minimized: false,
+      probeCommand: 'G38.2',
+      useTLO: false,
+      probeDepth: 10,
+      probeFeedrate: 20,
+      touchPlateHeight: 10,
+      retractionDistance: 4
+    },
+    bedlevel: {
       minimized: false,
       probeCommand: 'G38.2',
       useTLO: false,

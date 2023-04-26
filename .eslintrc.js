@@ -36,5 +36,11 @@ module.exports = {
         }],
         'react/no-access-state-in-setstate': 0,
         'react/prefer-stateless-function': 0,
+        "import/extensions": [
+            "error",
+            {
+                "js": "ignorePackages"
+            }
+        ]
     }
 };

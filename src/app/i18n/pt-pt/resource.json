@@ -537,5 +537,9 @@
     "SET": "DEFINIR",
     "CLR": "LIMPAR",
     "Set RTS line status upon opening": "Definir estado da linha RTS na abertura",
-    "Use RTS/CTS flow control": "Use o controlo de fluxo RTS/CTS"
+    "Use RTS/CTS flow control": "Use o controlo de fluxo RTS/CTS",
+    "Height Info": "",
+    "Available Limits": "",
+    "Bed Level Widget": "",
+    "Bed Level": ""
 }

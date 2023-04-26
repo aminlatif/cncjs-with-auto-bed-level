@@ -13,10 +13,7 @@ import Table from 'app/components/Table';
 import { TablePagination } from 'app/components/Paginations';
 import portal from 'app/lib/portal';
 import i18n from 'app/lib/i18n';
-import {
-  MODAL_CREATE_RECORD,
-  MODAL_UPDATE_RECORD
-} from './constants';
+import { MODAL_CREATE_RECORD, MODAL_UPDATE_RECORD } from './constants';
 import styles from './index.styl';
 import Axis from './Axis';
 
@@ -140,6 +137,47 @@ class TableRecords extends PureComponent {
                         <div>
                           <Axis value="Z" sub="max" />
                           {` = ${_get(row, 'limits.zmax')}`}
+                        </div>
+                      </Col>
+                    </Row>
+                  </FlexContainer>
+                );
+              }
+            },
+            {
+              title: i18n._('Available Limits'),
+              key: 'availableLimits',
+              render: (value, row, index) => {
+                return (
+                  <FlexContainer fluid gutterWidth={0}>
+                    <Row>
+                      <Col width="auto">
+                        <div>
+                          <Axis value="X" sub="min" />
+                          {` = ${_get(row, 'limits.availableXmin')}`}
+                        </div>
+                        <div>
+                          <Axis value="Y" sub="min" />
+                          {` = ${_get(row, 'limits.availableYmin')}`}
+                        </div>
+                        <div>
+                          <Axis value="Z" sub="min" />
+                          {` = ${_get(row, 'limits.availableZmin')}`}
+                        </div>
+                      </Col>
+                      <Col width="auto" style={{ width: 16 }} />
+                      <Col width="auto">
+                        <div>
+                          <Axis value="X" sub="max" />
+                          {` = ${_get(row, 'limits.availableXmax')}`}
+                        </div>
+                        <div>
+                          <Axis value="Y" sub="max" />
+                          {` = ${_get(row, 'limits.availableYmax')}`}
+                        </div>
+                        <div>
+                          <Axis value="Z" sub="max" />
+                          {` = ${_get(row, 'limits.availableZmax')}`}
                         </div>
                       </Col>
                     </Row>

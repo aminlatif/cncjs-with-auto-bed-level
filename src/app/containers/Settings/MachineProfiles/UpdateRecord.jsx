@@ -29,6 +29,7 @@ class UpdateRecord extends Component {
       return {
         values: {
           name: _get(values, 'name', ''),
+          heightInfo: _get(values, 'heightInfo', ''),
           limits: {
             xmin: Number(_get(values, 'limits.xmin')) || 0,
             xmax: Number(_get(values, 'limits.xmax')) || 0,
@@ -36,6 +37,12 @@ class UpdateRecord extends Component {
             ymax: Number(_get(values, 'limits.ymax')) || 0,
             zmin: Number(_get(values, 'limits.zmin')) || 0,
             zmax: Number(_get(values, 'limits.zmax')) || 0,
+            availableXmin: Number(_get(values, 'limits.availableXmin')) || 0,
+            availableXmax: Number(_get(values, 'limits.availableXmax')) || 0,
+            availableYmin: Number(_get(values, 'limits.availableYmin')) || 0,
+            availableYmax: Number(_get(values, 'limits.availableYmax')) || 0,
+            availableZmin: Number(_get(values, 'limits.availableZmin')) || 0,
+            availableZmax: Number(_get(values, 'limits.availableZmax')) || 0
           }
         }
       };
@@ -46,17 +53,58 @@ class UpdateRecord extends Component {
       const { updateRecord } = this.props.actions;
       const forceReload = true;
 
-      updateRecord(id, {
+      const newXmin = Number(_get(values, 'limits.xmin')) || 0;
+      const newXmax = Number(_get(values, 'limits.xmax')) || 0;
+      const newYmin = Number(_get(values, 'limits.ymin')) || 0;
+      const newYmax = Number(_get(values, 'limits.ymax')) || 0;
+      const newZmin = Number(_get(values, 'limits.zmin')) || 0;
+      const newZmax = Number(_get(values, 'limits.zmax')) || 0;
+      let newAvailableXmin = Number(_get(values, 'limits.availableXmin')) || 0;
+      let newAvailableXmax = Number(_get(values, 'limits.availableXmax')) || 0;
+      let newAvailableYmin = Number(_get(values, 'limits.availableYmin')) || 0;
+      let newAvailableYmax = Number(_get(values, 'limits.availableYmax')) || 0;
+      let newAvailableZmin = Number(_get(values, 'limits.availableZmin')) || 0;
+      let newAvailableZmax = Number(_get(values, 'limits.availableZmax')) || 0;
+
+      if (newAvailableXmin < newXmin) {
+        newAvailableXmin = newXmin;
+      }
+      if (newAvailableXmax > newXmax) {
+        newAvailableXmax = newXmax;
+      }
+      if (newAvailableYmin < newYmin) {
+        newAvailableYmin = newYmin;
+      }
+      if (newAvailableYmax > newYmax) {
+        newAvailableYmax = newYmax;
+      }
+      if (newAvailableZmin < newZmin) {
+        newAvailableZmin = newZmin;
+      }
+      if (newAvailableZmax > newZmax) {
+        newAvailableZmax = newZmax;
+      }
+
+      const updatedRecord = {
         name: _get(values, 'name', ''),
+        heightInfo: _get(values, 'heightInfo', ''),
         limits: {
-          xmin: Number(_get(values, 'limits.xmin')) || 0,
-          xmax: Number(_get(values, 'limits.xmax')) || 0,
-          ymin: Number(_get(values, 'limits.ymin')) || 0,
-          ymax: Number(_get(values, 'limits.ymax')) || 0,
-          zmin: Number(_get(values, 'limits.zmin')) || 0,
-          zmax: Number(_get(values, 'limits.zmax')) || 0,
+          xmin: newXmin,
+          xmax: newXmax,
+          ymin: newYmin,
+          ymax: newYmax,
+          zmin: newZmin,
+          zmax: newZmax,
+          availableXmin: newAvailableXmin,
+          availableXmax: newAvailableXmax,
+          availableYmin: newAvailableYmin,
+          availableYmax: newAvailableYmax,
+          availableZmin: newAvailableZmin,
+          availableZmax: newAvailableZmax
         }
-      }, forceReload);
+      };
+
+      updateRecord(id, updatedRecord, forceReload);
     };
 
     renderLimits = () => (
@@ -139,6 +187,86 @@ class UpdateRecord extends Component {
       </FlexContainer>
     );
 
+    renderAvailableLimits = () => (
+      <FlexContainer fluid gutterWidth={0}>
+        <Row>
+          <Col>
+            <Field name="limits.availableXmin">
+              {({ input, meta }) => (
+                <FormGroup>
+                  <label><Axis value="A X" sub="min" /></label>
+                  <Input {...input} type="number" />
+                  {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                </FormGroup>
+              )}
+            </Field>
+          </Col>
+          <Col width="auto" style={{ width: 16 }} />
+          <Col>
+            <Field name="limits.availableXmax">
+              {({ input, meta }) => (
+                <FormGroup>
+                  <label><Axis value="A X" sub="max" /></label>
+                  <Input {...input} type="number" />
+                  {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                </FormGroup>
+              )}
+            </Field>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Field name="limits.availableYmin">
+              {({ input, meta }) => (
+                <FormGroup>
+                  <label><Axis value="A Y" sub="min" /></label>
+                  <Input {...input} type="number" />
+                  {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                </FormGroup>
+              )}
+            </Field>
+          </Col>
+          <Col width="auto" style={{ width: 16 }} />
+          <Col>
+            <Field name="limits.availableYmax">
+              {({ input, meta }) => (
+                <FormGroup>
+                  <label><Axis value="A Y" sub="max" /></label>
+                  <Input {...input} type="number" />
+                  {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                </FormGroup>
+              )}
+            </Field>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Field name="limits.availableZmin">
+              {({ input, meta }) => (
+                <FormGroup>
+                  <label><Axis value="A Z" sub="min" /></label>
+                  <Input {...input} type="number" />
+                  {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                </FormGroup>
+              )}
+            </Field>
+          </Col>
+          <Col width="auto" style={{ width: 16 }} />
+          <Col>
+            <Field name="limits.availableZmax">
+              {({ input, meta }) => (
+                <FormGroup>
+                  <label><Axis value="A Z" sub="max" /></label>
+                  <Input {...input} type="number" />
+                  {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                </FormGroup>
+              )}
+            </Field>
+          </Col>
+        </Row>
+      </FlexContainer>
+    );
+
     render() {
       const { closeModal, updateModalParams } = this.props.actions;
       const { alertMessage } = this.props.state.modal.params;
@@ -177,11 +305,27 @@ class UpdateRecord extends Component {
                         </FormGroup>
                       )}
                     </Field>
+                    <Field name="heightInfo">
+                      {({ input, meta }) => (
+                        <FormGroup>
+                          <label>{i18n._('Height Info')}</label>
+                          <br />
+                          <textarea {...input} style={{ width: '100%', minHeight: '150px' }} />
+                          {meta.touched && meta.error && <Error>{meta.error}</Error>}
+                        </FormGroup>
+                      )}
+                    </Field>
                   </SectionGroup>
                   <SectionGroup style={{ marginBottom: 0 }}>
                     <SectionTitle>{i18n._('Limits')}</SectionTitle>
                     <Margin left={24}>
                       {this.renderLimits()}
+                    </Margin>
+                  </SectionGroup>
+                  <SectionGroup style={{ marginBottom: 0 }}>
+                    <SectionTitle>{i18n._('Available Limits')}</SectionTitle>
+                    <Margin left={24}>
+                      {this.renderAvailableLimits()}
                     </Margin>
                   </SectionGroup>
                 </Modal.Body>

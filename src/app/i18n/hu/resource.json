@@ -537,5 +537,9 @@
     "SET": "BEÁLLÍT",
     "CLR": "TÖRLÉS",
     "Set RTS line status upon opening": "RTS vonal állapotának beállítása az nyitáskor",
-    "Use RTS/CTS flow control": "Használjon RTS/CTS áramvezérlést"
+    "Use RTS/CTS flow control": "Használjon RTS/CTS áramvezérlést",
+    "Height Info": "",
+    "Available Limits": "",
+    "Bed Level Widget": "",
+    "Bed Level": ""
 }

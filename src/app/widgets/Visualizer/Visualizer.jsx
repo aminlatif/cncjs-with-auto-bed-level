@@ -22,6 +22,7 @@ import { getBoundingBox, loadSTL, loadTexture } from './helpers';
 import Viewport from './Viewport';
 import CoordinateAxes from './CoordinateAxes';
 import Cuboid from './Cuboid';
+import Polygon from './Polygon';
 import CuttingPointer from './CuttingPointer';
 import GridLine from './GridLine';
 import PivotPoint3 from './PivotPoint3';
@@ -113,13 +114,17 @@ class Visualizer extends Component {
         this.limits = null;
       }
 
-      const state = this.props.state;
-      const limits = _get(this.machineProfile, 'limits');
-      const { xmin = 0, xmax = 0, ymin = 0, ymax = 0, zmin = 0, zmax = 0 } = { ...limits };
-      this.limits = this.createLimits(xmin, xmax, ymin, ymax, zmin, zmax);
-      this.limits.name = 'Limits';
-      this.limits.visible = state.objects.limits.visible;
-      this.group.add(this.limits);
+      if (this.availableLimits) {
+        this.group.remove(this.availableLimits);
+        this.availableLimits = null;
+      }
+
+      if (this.heightInfo) {
+        this.group.remove(this.heightInfo);
+        this.heightInfo = null;
+      }
+
+      this.addLimitsToSceneGroup();
 
       this.updateLimitsPosition();
 
@@ -154,6 +159,8 @@ class Visualizer extends Component {
       this.cuttingTool = null;
       this.cuttingPointer = null;
       this.limits = null;
+      this.availableLimits = null;
+      this.heightInfo = null;
       this.visualizer = null;
     }
 
@@ -450,11 +457,14 @@ class Visualizer extends Component {
       this.updateScene();
     }
 
-    createLimits(xmin, xmax, ymin, ymax, zmin, zmax) {
+    createLimits(xmin, xmax, ymin, ymax, zmin, zmax, availableZone = false) {
       const dx = Math.abs(xmax - xmin) || Number.MIN_VALUE;
       const dy = Math.abs(ymax - ymin) || Number.MIN_VALUE;
       const dz = Math.abs(zmax - zmin) || Number.MIN_VALUE;
-      const color = colornames('indianred');
+      let color = colornames('indianred');
+      if (availableZone) {
+        color = colornames('purple');
+      }
       const opacity = 0.5;
       const transparent = true;
       const dashed = true;
@@ -477,6 +487,11 @@ class Visualizer extends Component {
       });
 
       return limits;
+    }
+
+    createHeightInfo(heightInfo, limits = null) {
+      const heightMap = new Polygon(heightInfo, limits);
+      return heightMap;
     }
 
     createCoordinateSystem(units) {
@@ -739,17 +754,36 @@ class Visualizer extends Component {
       }
 
       { // Limits
-        const limits = _get(this.machineProfile, 'limits');
-        const { xmin = 0, xmax = 0, ymin = 0, ymax = 0, zmin = 0, zmax = 0 } = { ...limits };
-        this.limits = this.createLimits(xmin, xmax, ymin, ymax, zmin, zmax);
-        this.limits.name = 'Limits';
-        this.limits.visible = objects.limits.visible;
-        this.group.add(this.limits);
-
+        this.addLimitsToSceneGroup();
         this.updateLimitsPosition();
       }
 
       this.scene.add(this.group);
+    }
+
+    addLimitsToSceneGroup() {
+      const limits = _get(this.machineProfile, 'limits');
+      const { xmin = 0, xmax = 0, ymin = 0, ymax = 0, zmin = 0, zmax = 0 } = { ...limits };
+      const { availableXmin = 0, availableXmax = 0, availableYmin = 0, availableYmax = 0, availableZmin = 0, availableZmax = 0 } = { ...limits };
+      this.limits = this.createLimits(xmin, xmax, ymin, ymax, zmin, zmax);
+      this.limits.name = 'Limits';
+      this.limits.visible = true;
+      this.group.add(this.limits);
+
+      this.availableLimits = this.createLimits(availableXmin, availableXmax, availableYmin, availableYmax, availableZmin, availableZmax, true);
+      this.availableLimits.name = 'AvailableLimits';
+      this.availableLimits.visible = true;
+      this.group.add(this.availableLimits);
+
+      const determinedHeightInfo = _get(this.machineProfile, 'determinedHeightInfo');
+      // const heightInfo = determinedHeightInfo.heightInfo;
+      const calcualtedHeightInfo = determinedHeightInfo.calculatedHeightInfo;
+      if (calcualtedHeightInfo) {
+        this.heightInfo = this.createHeightInfo(calcualtedHeightInfo, limits);
+        this.heightInfo.name = 'HeightInfo';
+        this.heightInfo.visible = true;
+        this.group.add(this.heightInfo);
+      }
     }
 
     // @param [options] The options object.
@@ -926,14 +960,36 @@ class Visualizer extends Component {
 
       const limits = _get(this.machineProfile, 'limits');
       const { xmin = 0, xmax = 0, ymin = 0, ymax = 0, zmin = 0, zmax = 0 } = { ...limits };
+      const { availableXmin = 0, availableXmax = 0, availableYmin = 0, availableYmax = 0, availableZmin = 0, availableZmax = 0, } = { ...limits };
       const pivotPoint = this.pivotPoint.get();
       const { x: mpox, y: mpoy, z: mpoz } = this.machinePosition;
       const { x: wpox, y: wpoy, z: wpoz } = this.workPosition;
       const x0 = ((xmin + xmax) / 2) - (mpox - wpox) - pivotPoint.x;
       const y0 = ((ymin + ymax) / 2) - (mpoy - wpoy) - pivotPoint.y;
       const z0 = ((zmin + zmax) / 2) - (mpoz - wpoz) - pivotPoint.z;
-
       this.limits.position.set(x0, y0, z0);
+
+      if (!this.availableLimits) {
+        return;
+      }
+
+      const ax0 = ((availableXmin + availableXmax) / 2) - (mpox - wpox) - pivotPoint.x;
+      const ay0 = ((availableYmin + availableYmax) / 2) - (mpoy - wpoy) - pivotPoint.y;
+      const az0 = ((availableZmin + availableZmax) / 2) - (mpoz - wpoz) - pivotPoint.z;
+      this.availableLimits.position.set(ax0, ay0, az0);
+
+      if (!this.heightInfo) {
+        return;
+      }
+
+      console.log(`Machine Position: ${mpox}, ${mpoy}, ${mpoz}`);
+      console.log(`Work Position: ${wpox}, ${wpoy}, ${wpoz}`);
+
+      const hx0 = -1 * (mpox - wpox) - pivotPoint.x;
+      const hy0 = -1 * (mpoy - wpoy) - pivotPoint.y;
+      const hz0 = -1 * (mpoz - wpoz) - pivotPoint.z;
+
+      this.heightInfo.position.set(hx0, hy0, hz0);
     }
 
     // Make the controls look at the specified position

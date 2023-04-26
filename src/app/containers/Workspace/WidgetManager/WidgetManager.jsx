@@ -107,6 +107,13 @@ class WidgetManager extends PureComponent {
         disabled: false
       },
       {
+        id: 'bedlevel',
+        caption: i18n._('Bed Level Widget'),
+        details: i18n._('Bed Level Widget'),
+        visible: true,
+        disabled: false
+      },
+      {
         id: 'spindle',
         caption: i18n._('Spindle Widget'),
         details: i18n._('This widget provides the spindle control.'),
@@ -178,6 +185,7 @@ class WidgetManager extends PureComponent {
         .map(widgetId => widgetId.split(':')[0]);
       const secondaryWidgets = store.get('workspace.container.secondary.widgets', [])
         .map(widgetId => widgetId.split(':')[0]);
+      console.log(secondaryWidgets);
       const activeWidgets = union(defaultWidgets, primaryWidgets, secondaryWidgets);
 
       this.widgetList.forEach(widget => {

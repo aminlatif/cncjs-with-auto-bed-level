@@ -639,6 +639,19 @@ machines.update = (id, options) => new Promise((resolve, reject) => {
     });
 });
 
+machines.updateHeightInfo = (id, options) => new Promise((resolve, reject) => {
+  authrequest
+    .put('/api/machines/height/' + id)
+    .send(options)
+    .end((err, res) => {
+      if (err) {
+        reject(res);
+      } else {
+        resolve(res);
+      }
+    });
+});
+
 machines.delete = (id) => new Promise((resolve, reject) => {
   authrequest
     .delete('/api/machines/' + id)
@@ -654,6 +667,34 @@ machines.delete = (id) => new Promise((resolve, reject) => {
 machines.run = (id) => new Promise((resolve, reject) => {
   authrequest
     .post('/api/machines/run/' + id)
+    .end((err, res) => {
+      if (err) {
+        reject(res);
+      } else {
+        resolve(res);
+      }
+    });
+});
+
+const bedLevel = {};
+
+bedLevel.apply = (options) => new Promise((resolve, reject) => {
+  authrequest
+    .get('/api/bedlevel/apply')
+    .query(options)
+    .end((err, res) => {
+      if (err) {
+        reject(res);
+      } else {
+        resolve(res);
+      }
+    });
+});
+
+bedLevel.probe = (options) => new Promise((resolve, reject) => {
+  authrequest
+    .get('/api/bedlevel/probe')
+    .query(options)
     .end((err, res) => {
       if (err) {
         reject(res);
@@ -692,4 +733,5 @@ export default {
   macros,
   mdi,
   users,
+  bedLevel
 };

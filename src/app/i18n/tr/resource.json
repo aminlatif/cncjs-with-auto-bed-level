@@ -537,5 +537,9 @@
     "SET": "AYARLA",
     "CLR": "TEMİZLE",
     "Set RTS line status upon opening": "Açılışta RTS hat durumunu ayarla",
-    "Use RTS/CTS flow control": "RTS/CTS akış kontrolü kullanın"
+    "Use RTS/CTS flow control": "RTS/CTS akış kontrolü kullanın",
+    "Height Info": "",
+    "Available Limits": "",
+    "Bed Level Widget": "",
+    "Bed Level": ""
 }

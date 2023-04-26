@@ -537,5 +537,9 @@
     "SET": "SETT",
     "CLR": "SLETT",
     "Set RTS line status upon opening": "Sett RTS-linjestatus ved åpning",
-    "Use RTS/CTS flow control": "Bruk RTS/CTS strømstyring"
+    "Use RTS/CTS flow control": "Bruk RTS/CTS strømstyring",
+    "Height Info": "",
+    "Available Limits": "",
+    "Bed Level Widget": "",
+    "Bed Level": ""
 }
